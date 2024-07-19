@@ -1,0 +1,14 @@
+We use python and youtube api to get the data that we need in this case it the title, likes,views commnets
+of all videos in a playlist
+we store this into a kafka table,
+we use Stream to subscribe to table changes, in this case youtube_changes_stream subscribes to kafka topic of table 'youtube_changes'
+
+So the youtube_changes table has the changes, the youtube_changes_stream is sub to kafka topic of youtube_changs table
+then we create a stream to output to telegram, then to bridge between youtube_changes_stream and telegram_outbox_stream we use insert into
+
+then we set up a http sink connector for telegram outbox stream , this will send event in telegram_outbox stream to telegram api using our token for our bot
+we harcode the chatId that  telegram needs in the telegram_outbox stream
+telegram recieves json object with chatId and text fields
+
+#TO get chat id, paste your token after /bot
+https://api.telegram.org/bot7088364995:AAHisYQYpqFlehvMYMvOoo1y4mmePuKYN6Y/getUpdates
